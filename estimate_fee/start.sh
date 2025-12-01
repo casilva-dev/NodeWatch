@@ -104,7 +104,7 @@ elif [ "$smartfee_enabled" = "true" ] && [ "$forecast_type" = "smart" ]; then
     block3=$($BTC_CLI estimatesmartfee 8 "economical" | jq '.feerate * 1e5')
     laterblk=$($BTC_CLI estimatesmartfee 16 "economical" | jq '.feerate * 1e5')
 else
-    fees_recommended=$(curl -s "https://mempool.space/api/v1/fees/recommended")
+    fees_recommended=$(curl -s "https://mempool.space/api/v1/fees/precise")
     if [ -z "$fees_recommended" ]; then
         echo "Error: Failed to retrieve data from the API."
         exit 1
