@@ -4,7 +4,7 @@ SCRIPT_PATH=$(readlink -f "$0")
 SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
 
 tmux send-keys -t nodewatch:0.4 Escape
-cmds='bitcoin-qt bitcoin-gui bitcoind bitcoin-node tor i2pd electrs cjdroute'
+cmds='bitcoin-?(d|qt|gui|node) tor i2pd cjdr.*core electrs (py.*|bin/)gnoban(.py)?'
 psearch="";sep=""
 for cmd in $cmds; do
     psearch="${psearch}${sep}(^|/)$cmd"
