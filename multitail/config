@@ -1,5 +1,5 @@
 colorscheme:bitcoin
-cs_re:cyan:^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|GMT[-+][0-9]{2})?
+cs_re:cyan:^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|UTC[-+][0-9]{2})?
 cs_re:green,,bold:Bitcoin Core version v.*|UpdateTip:|succeeded
 cs_re:white,,bold:Saw new (cmpctblock )?header
 cs_re:yellow,,bold:W(ARNING|arning):?|Potential.*try.*peer|expired
