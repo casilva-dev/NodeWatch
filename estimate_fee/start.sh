@@ -7,9 +7,11 @@ CONFIG_FILE="$SCRIPT_DIR/config.env"
 if [ -f "$CONFIG_FILE" ]; then
     BITCOIN_DATADIR=$(awk -F '=' '/^BITCOIN_DATADIR=/ {last=$2} END {print last}' "$CONFIG_FILE")
     FEES_FORECAST=$(awk -F '=' '/^FEES_FORECAST=/ {last=$2} END {print last}' "$CONFIG_FILE")
+    FEES_API_URL=$(awk -F '=' '/^FEES_API_URL=/ {last=$2} END {print last}' "$CONFIG_FILE")
 fi
 [ -z "$BITCOIN_DATADIR" ] && BITCOIN_DATADIR="$HOME/.bitcoin"
 [ -z "$FEES_FORECAST" ] && FEES_FORECAST="smart"
+[ -z "$FEES_API_URL" ] && FEES_API_URL="https://mempool.space/api/v1/fees/precise"
 
 BTC_CLI="bitcoin-cli -datadir=$BITCOIN_DATADIR -rpcwait"
 
@@ -104,7 +106,7 @@ elif [ "$smartfee_enabled" = "true" ] && [ "$forecast_type" = "smart" ]; then
     block3=$($BTC_CLI estimatesmartfee 8 "economical" | jq '.feerate * 1e5')
     laterblk=$($BTC_CLI estimatesmartfee 16 "economical" | jq '.feerate * 1e5')
 else
-    fees_recommended=$(curl -f -s "https://mempool.space/api/v1/fees/precise")
+    fees_recommended=$(curl -f -s "$FEES_API_URL")
     if [ -z "$fees_recommended" ]; then
         echo "Error: Failed to retrieve data from the API."
         exit 1
